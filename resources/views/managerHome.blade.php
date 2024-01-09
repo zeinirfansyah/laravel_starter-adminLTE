@@ -12,7 +12,7 @@
                     </div>
                     @endif
 
-                    <h2>Kamu login sebagai User</h2>
+                    <h2>Kamu login sebagai Manager</h2>
                 </div>
             </div>
         </div>
