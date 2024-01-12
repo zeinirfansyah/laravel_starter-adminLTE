@@ -48,4 +48,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+     /**
+     * Set the default value for the 'role' attribute.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    protected $attributes = [
+        'role' => 'user',
+    ];
 }
