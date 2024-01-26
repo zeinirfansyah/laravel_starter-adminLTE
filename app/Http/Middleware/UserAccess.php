@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserAccess
@@ -13,12 +14,17 @@ class UserAccess
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $userRole): Response
+    public function handle(Request $request, Closure $next, ...$allowedRoles)
     {
-        if (auth()->user()->role == $userRole) {
-            return $next($request);
+        $user = auth()->user();
+
+        foreach ($allowedRoles as $role) {
+            if ($user && $user->role === $role) {
+                return $next($request);
+            }
         }
 
-        return response()->json(['Anda tidak memiliki akses pada halaman ini.']);
+        Log::warning('Access Denied:', ['user' => $user, 'required_roles' => $allowedRoles]);
+        abort(403, trans('auth.access_denied'));
     }
 }

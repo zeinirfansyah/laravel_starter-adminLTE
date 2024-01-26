@@ -50,7 +50,7 @@ class RegisterController extends Controller
      */
    public function register(Request $request) {
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_user' => 'required|string|max:255',
             'nomor_telpon' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
@@ -67,7 +67,7 @@ class RegisterController extends Controller
         ]);
 
         $user = [
-            'nama' => $request->nama,
+            'nama_user' => $request->nama_user,
             'nomor_telpon' => $request->nomor_telpon,
             'alamat' => $request->alamat,
             'username' => $request->username,
