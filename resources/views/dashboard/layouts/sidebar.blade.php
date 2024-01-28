@@ -10,11 +10,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img
-                    src="https://zeinirfansyah.me/assets/foto4-fab19a53.png"
-                    class="img-circle elevation-2"
-                    alt="User Image"
-                />
+                @if (auth()->user()->avatar)
+                <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}" style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
+              @else
+                <img src="#" class="img-circle elevation-2" alt="User Image" />
+              @endif
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ auth()->user()->nama_user }}</a>

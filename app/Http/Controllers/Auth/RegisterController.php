@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => 'required|string|min:8',
 
         ], [
@@ -64,7 +65,21 @@ class RegisterController extends Controller
             'max' => ':attribute maksimal 255 karakter.',
             'min' => ':attribute minimal 8 karakter.',
             'email' => ':attribute harus email.',
+            'image' => ':attribute harus jpeg, png, jpg.',
+            'mimes' => ':attribute harus jpeg, png, jpg.',
+            'max' => ':attribute maksimal 2 MB.',
         ]);
+
+       // Handle file upload
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/avatars', $filename);
+        
+        } else {
+            // Default avatar or any other logic you prefer
+            $filename = 'default_avatar.jpg';
+        }
 
         $user = [
             'nama_user' => $request->nama_user,
@@ -72,10 +87,11 @@ class RegisterController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
+            'avatar' => $filename,
             'password' => Hash::make($request->password)
         ];
 
-        $user = User::create($user);
+        User::create($user);
 
         return redirect(route('login'))->with('success', 'Akun user berhasil dibuat. Silahkan login.');
     }

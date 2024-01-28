@@ -29,50 +29,53 @@
             </ul>
           </div>
         @endif
+        <div class="card p-3">
+          <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
+            <div class="row">
+              <div class="col">
+                <label for="nama_user" class="form-label">Nama User</label>
+                <input type="text" name="nama_user" value="{{ old('nama_user') }}" placeholder="Masukkan nama lengkap"
+                  required class="form-control" />
 
+                <label for="nomor_telpon" class="form-label">Nomor Telepon</label>
+                <input name="nomor_telpon" value="{{ old('nomor_telpon') }}" placeholder="Masukkan nomor telepon"
+                  class="form-control" />
 
-          <div class="card p-3">
-            <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
-              @csrf
+                <!-- alamat text areaa -->
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea name="alamat" placeholder="Masukkan alamat" rows="4" class="form-control">{{ old('alamat') }}</textarea>
+              </div>
+              <div class="col">
+                <!-- email input -->
+                <label for="email" class="form-label">Email</label>
+                <input name="email" value="{{ old('email') }}" placeholder="Masukkan email" class="form-control" />
 
-              <label for="nama_user" class="form-label">Nama User</label>
-              <input type="text" name="nama_user" value="{{ old('nama_user') }}" required class="form-control" />
+                <!-- username input -->
+                <label for="username" class="form-label">Username</label>
+                <input name="username" value="{{ old('username') }}" placeholder="Masukkan username"
+                  class="form-control" />
 
-              <label for="nomor_telpon" class="form-label">Nomor Telepon</label>
-              <input name="nomor_telpon" value="{{ old('nomor_telpon') }}" class="form-control" />
+                <!-- password input -->
+                <label for="password" class="form-label">Password</label>
+                <input name="password" type="password" value="{{ old('username') }}" class="form-control" />
 
-              <!-- email input -->
-              <label for="email" class="form-label">Email</label>
-              <input name="email" value="{{ old('email') }}" class="form-control" />
+                <!-- role dropdown -->
+                <label for="role" class="form-label">Role</label>
+                <select name="role" class="form-control">
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+            </div>
 
-              <!-- alamat text areaa -->
-              <label for="alamat" class="form-label">Alamat</label>
-              <textarea name="alamat" class="form-control" rows="3">{{ old('alamat') }}</textarea>
-
-              <!-- username input -->
-              <label for="username" class="form-label">Username</label>
-              <input name="username" value="{{ old('username') }}" class="form-control" />
-
-              <!-- password input -->
-              <label for="password" class="form-label">Password</label>
-              <input name="password" type="password" value="{{ old('username') }}" class="form-control" />
-
-              <!-- role dropdown -->
-              <label for="role" class="form-label">Role</label>
-              <select name="role" class="form-control">
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
-
-              <button type="submit" class="btn btn-primary mt-2">
-                Create User
-              </button>
-            </form>
-          </div>
-
+            <button type="submit" class="btn btn-primary mt-2">
+              Create User
+            </button>
+          </form>
+        </div>
       </div>
-
     </div>
   </div>
 @endsection
