@@ -22,23 +22,26 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//    all user routes
-Route::get('/customer', [HomeController::class, 'index'])->name('customer.home');
+Route::middleware(['auth'])->group(function(){
+    
+    //    all user routes
+    Route::get('/home', [HomeController::class, 'index'])->name('user.home');
 
-// Admin and manager routes
-Route::middleware(['auth', 'user-access:admin,manager'])->group(function(){
-    Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home');
-});
+    // Admin and manager routes
+    Route::middleware(['auth', 'user-access:admin,manager'])->group(function(){
+        Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home');
+    });
 
-// Manager only
-Route::middleware(['auth', 'user-access:manager'])->group(function(){
-    Route::prefix('/manager/users')->group(function () {
-        Route::get('/', [UserDataController::class, 'index'])->name('users.index');
-        Route::get('/create', [UserDataController::class, 'createUser'])->name('users.create');
-        Route::post('/create', [UserDataController::class, 'storeUser'])->name('users.store');
-        Route::get('/{id}/update', [UserDataController::class, 'updateUser'])->name('users.update');
-        Route::put('/{id}/update', [UserDataController::class, 'editUser'])->name('users.edit');
-        Route::delete('/{id}/delete', [UserDataController::class, 'deleteUser'])->name('users.delete');
-      
+    // Manager only
+    Route::middleware(['auth', 'user-access:manager'])->group(function(){
+        Route::prefix('/manager/users')->group(function () {
+            Route::get('/', [UserDataController::class, 'index'])->name('users.index');
+            Route::get('/create', [UserDataController::class, 'createUser'])->name('users.create');
+            Route::post('/create', [UserDataController::class, 'storeUser'])->name('users.store');
+            Route::get('/{id}/update', [UserDataController::class, 'updateUser'])->name('users.update');
+            Route::put('/{id}/update', [UserDataController::class, 'editUser'])->name('users.edit');
+            Route::delete('/{id}/delete', [UserDataController::class, 'deleteUser'])->name('users.delete');
+        
+        });
     });
 });
