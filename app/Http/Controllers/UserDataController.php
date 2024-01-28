@@ -23,7 +23,8 @@ class UserDataController extends Controller
     public function updateUser($id)
     {
         $user = User::find($id);
-        return view('dashboard.users.update', compact('user'));
+        $roles = ['admin', 'user'];
+        return view('dashboard.users.update', compact('user', 'roles'));
     }
 
     public function storeUser(Request $request)
@@ -91,10 +92,9 @@ class UserDataController extends Controller
             'nama_user' => 'required|string|max:255',
             'nomor_telpon' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'password' => 'required|string|min:8',
             'role' => 'required|string|max:255',
         ], [
             'required' => ':attribute harus diisi.',
@@ -113,7 +113,6 @@ class UserDataController extends Controller
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
             $avatar->storeAs('public/avatars', $filename);
-        
         } else {
             // Default avatar or any other logic you prefer
             $filename = 'default_avatar.jpg';
@@ -135,7 +134,7 @@ class UserDataController extends Controller
 
         $user = User::where('id', $id)->update($user);
 
-        return redirect()->route('users.index')->with('success', 'User data updated successfully');
+        return redirect()->route('users.detail', ['id' => $id])->with('success', 'User data updated successfully');
     }
 
     public function deleteUser($id)
