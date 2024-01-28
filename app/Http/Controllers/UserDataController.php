@@ -57,6 +57,11 @@ class UserDataController extends Controller
         return redirect()->route('users.index')->with('success', 'User data created successfully');
     }
 
+    public function detailUser($id) {
+        $user = User::find($id);
+        return view('dashboard.users.detail', compact('user'));
+    }
+
     public function editUser(Request $request, $id) {
         $user = User::find($id);
 

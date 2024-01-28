@@ -80,7 +80,7 @@
                             {{ $user->email }}
                           </td>
                           <td>
-                            <a href="{{ route('users.update', ['id' => $user->id]) }}"
+                            <a href="{{ route('users.detail', ['id' => $user->id]) }}"
                               class="btn btn-primary">Detail</a>
 
                             <form action="{{ route('users.delete', ['id' => $user->id]) }}"
