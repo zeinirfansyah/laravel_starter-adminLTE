@@ -46,6 +46,14 @@
                 <!-- alamat text areaa -->
                 <label for="alamat" class="form-label">Alamat</label>
                 <textarea name="alamat" placeholder="Masukkan alamat" rows="4" class="form-control">{{ old('alamat') }}</textarea>
+
+                <label for="avatar" class="col-md-4 col-form-label text-md-end">{{ __('Avatar')}}</label>
+                <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
               </div>
               <div class="col">
                 <!-- email input -->

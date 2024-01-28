@@ -47,6 +47,15 @@
                 <!-- alamat text areaa -->
                 <label for="alamat" class="form-label">Alamat</label>
                 <textarea name="alamat" placeholder="Masukkan alamat" rows="4" class="form-control">{{ old('alamat', $user->alamat) }}</textarea>
+
+                <label for="avatar" class="form-label">Avatar</label>
+                <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
+                @error('avatar')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
               </div>
               <div class="col">
                 <!-- email input -->
@@ -57,10 +66,6 @@
                 <label for="username" class="form-label">Username</label>
                 <input name="username" value="{{ old('username', $user->username) }}" placeholder="Masukkan username"
                   class="form-control" />
-
-                <!-- password input -->
-                <!-- <label for="password" class="form-label">Password</label>
-                <input name="password" type="password" value="{{ old('username') }}" class="form-control" /> -->
 
                 <!-- role dropdown -->
                 <label for="role" class="form-label">Role</label>
