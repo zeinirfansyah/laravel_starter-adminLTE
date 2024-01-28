@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Home</li>
-              <li class="breadcrumb-item active">Book Categories</li>
+              <li class="breadcrumb-item active">User Management</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -81,7 +81,7 @@
                           </td>
                           <td>
                             <a href="{{ route('users.update', ['id' => $user->id]) }}"
-                              class="btn btn-primary">Edit</a>
+                              class="btn btn-primary">Detail</a>
 
                             <form action="{{ route('users.delete', ['id' => $user->id]) }}"
                               method="POST" class="d-inline">
