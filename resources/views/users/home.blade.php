@@ -14,11 +14,21 @@
 
             <h2>Kamu login sebagai User</h2>
 
-            @if (auth()->user()->avatar)
-              <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}" style="height: 100px; width: 100px; border-radius: 50% 50%; object-fit: cover">
-            @else
-              <img src="#" class="img-circle elevation-2" alt="User Image" />
-            @endif
+            <div class="image">
+                @if (auth()->user()->avatar)
+                  @if (auth()->user()->avatar === 'default_avatar.jpg')
+                    <img src="{{ asset('images/' . auth()->user()->avatar) }}"
+                      style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
+                  @else
+                    <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}"
+                      style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover"
+                      alt="{{ auth()->user()->avatar }}">
+                  @endif
+                @else
+                  <img src="{{ asset('images/default_avatar.jpg') }}"
+                    style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
+                @endif
+              </div>
           </div>
         </div>
       </div>
