@@ -13,7 +13,7 @@
                 @if (auth()->user()->avatar)
                 <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}" style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
               @else
-                <img src="#" class="img-circle elevation-2" alt="User Image" />
+              <img src="{{ asset('storage/avatars/default_avatar.jpg') }}" style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
               @endif
             </div>
             <div class="info">
