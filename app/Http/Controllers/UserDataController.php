@@ -27,6 +27,25 @@ class UserDataController extends Controller
         return view('dashboard.users.update', compact('user', 'roles'));
     }
 
+    // handle upload avatar
+   // handle upload avatar
+    private function handleAvatarUpload(Request $request, $currentAvatar)
+    {
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+
+            // Save the file in the 'public/avatars' directory
+            $avatar->storeAs('public/avatars', $filename);
+
+            return $filename; // Return the generated filename
+        }
+
+        // If no new avatar file is provided, return the current avatar filename
+        return $currentAvatar;
+    }
+
+
     public function storeUser(Request $request)
     {
         $validate = $request->validate([
@@ -50,15 +69,7 @@ class UserDataController extends Controller
             'max' => ':attribute maksimal 2 MB.',
         ]);
 
-        // Handle file upload
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->storeAs('public/avatars', $filename);
-        } else {
-            // Default avatar or any other logic you prefer
-            $filename = 'default_avatar.jpg';
-        }
+        $filename = $this->handleAvatarUpload($request, 'default_avatar.jpg');
 
         $user = [
             'nama_user' => $request->nama_user,
@@ -109,14 +120,8 @@ class UserDataController extends Controller
         ]);
 
         // Handle file upload
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->storeAs('public/avatars', $filename);
-        } else {
-            // Default avatar or any other logic you prefer
-            $filename = 'default_avatar.jpg';
-        }
+        $currentAvatar = $user->avatar;
+        $filename = $this->handleAvatarUpload($request, $currentAvatar);
 
 
         $user = [
