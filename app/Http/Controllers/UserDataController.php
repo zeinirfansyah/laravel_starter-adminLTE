@@ -36,6 +36,7 @@ class UserDataController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => 'required|string|min:8',
+            'role' => 'required|string|max:255',
         ], [
             'required' => ':attribute harus diisi.',
             'unique' => ':attribute sudah ada.',
@@ -66,6 +67,7 @@ class UserDataController extends Controller
             'email' => $request->email,
             'avatar' => $filename,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
             'created_at' => now(),
             'updated_at' => now(),
         ];
@@ -91,7 +93,9 @@ class UserDataController extends Controller
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => 'required|string|min:8',
+            'role' => 'required|string|max:255',
         ], [
             'required' => ':attribute harus diisi.',
             'unique' => ':attribute sudah ada.',
@@ -99,7 +103,22 @@ class UserDataController extends Controller
             'max' => ':attribute maksimal 255 karakter.',
             'min' => ':attribute minimal 8 karakter.',
             'email' => ':attribute harus email.',
+            'image' => ':attribute harus jpeg, png, jpg.',
+            'mimes' => ':attribute harus jpeg, png, jpg.',
+            'max' => ':attribute maksimal 2 MB.',
         ]);
+
+        // Handle file upload
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/avatars', $filename);
+        
+        } else {
+            // Default avatar or any other logic you prefer
+            $filename = 'default_avatar.jpg';
+        }
+
 
         $user = [
             'nama_user' => $request->nama_user,
@@ -107,7 +126,9 @@ class UserDataController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
+            'avatar' => $filename,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
             'created_at' => now(),
             'updated_at' => now(),
         ];
