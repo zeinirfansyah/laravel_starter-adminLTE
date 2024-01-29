@@ -18,14 +18,15 @@ class CreateUsersSeeder extends Seeder
 
         $faker = Faker::create();
 
-       for ($i = 0; $i < 10; $i++) {
+       for ($i = 0; $i < 15; $i++) {
         DB::table('users')->insert([
                 'nama_user'=>$faker->name(),
                 'nomor_telpon'=>$faker->phoneNumber(),
                 'alamat'=>$faker->address(),
                 'username'=>$faker->userName(),
                 'email'=>$faker->email(),
-                'role'=>"user",
+                // role randomly set user, admin, manager
+                'role'=>$faker->randomElement(['user', 'admin', 'manager']),
                 'password'=> bcrypt('password123'),
             ]);
        }

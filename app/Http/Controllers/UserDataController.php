@@ -10,10 +10,15 @@ class UserDataController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(8);
+        // Use a dynamic query to adjust based on the user's role
+        $usersQuery = User::query();
+
+        // Paginate the results with 8 items per page without the manager
+        $users =  $usersQuery->where('role', '!=', 'manager')->paginate(8);
 
         return view('dashboard.users.index', ['users' => $users]);
     }
+
 
     public function createUser()
     {
@@ -28,7 +33,7 @@ class UserDataController extends Controller
     }
 
     // handle upload avatar
-   // handle upload avatar
+    // handle upload avatar
     private function handleAvatarUpload(Request $request, $currentAvatar)
     {
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {

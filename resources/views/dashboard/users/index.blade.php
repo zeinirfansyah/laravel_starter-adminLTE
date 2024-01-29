@@ -97,7 +97,9 @@
                     </tbody>
                   </table>
                   <br />
-                  {{ $users->links('pagination::bootstrap-5') }}
+                  <div class="mx-3">
+                    {{ $users->links('pagination::bootstrap-5') }}
+                  </div>
                 </div>
               </div>
             </div>
