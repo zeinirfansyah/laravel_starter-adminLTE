@@ -29,13 +29,26 @@ class UserDataController extends Controller
             });
         }
 
+
+        // sort data in table column
+        if ($request->has('sort_column') && $request->has('sort_order')) {
+            $sortColumn = $request->sort_column;
+            $sortOrder = $request->sort_order;
+            $usersQuery->orderBy($sortColumn, $sortOrder);
+        }
+
         // Paginate the results with 8 items per page without the manager
         $users = $usersQuery->where('role', '!=', 'manager')->paginate(8);
 
         // Pass the roles to the view for filtering
         $roles = ['all roles', 'admin', 'user'];
 
-        return view('dashboard.users.index', ['users' => $users, 'roles' => $roles]);
+        return view('dashboard.users.index', [
+            'users' => $users,
+            'roles' => $roles,
+            'sortColumn' => $request->get('sort_column'),
+            'sortOrder' => $request->get('sort_order'),
+        ]);
     }
 
 
