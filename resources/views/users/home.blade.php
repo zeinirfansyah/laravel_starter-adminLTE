@@ -29,6 +29,7 @@
                     style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
                 @endif
               </div>
+
           </div>
         </div>
       </div>

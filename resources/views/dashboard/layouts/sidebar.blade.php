@@ -120,15 +120,9 @@
         </li>
         <li class="nav-header">Settings</li>
         <li class="nav-item">
-          <a href="pages/dashboard.html" class="nav-link">
+          <a href="{{route('profile.show')}}" class="nav-link">
             <i class="nav-icon fas fa-users"></i>
-            <p>Link 11</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/dashboard.html" class="nav-link">
-            <i class="nav-icon fas fa-cog"></i>
-            <p>Link 12</p>
+            <p>Profile</p>
           </a>
         </li>
         <li class="nav-item">

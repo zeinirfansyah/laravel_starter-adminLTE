@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDataController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +27,16 @@ Route::middleware(['auth'])->group(function(){
     
     //    all user routes
     Route::get('/home', [HomeController::class, 'index'])->name('user.home');
+    
 
     // Admin and manager routes
     Route::middleware(['auth', 'user-access:admin,manager'])->group(function(){
-        Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home');
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [HomeController::class, 'adminHome'])->name('admin.home');
+            Route::get('/profile', [ProfileController::class, 'index'])->name('profile.show');
+            Route::get('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+            Route::put('/profile/update', [ProfileController::class, 'editProfile'])->name('profile.edit');
+        });
     });
 
     // Manager only
