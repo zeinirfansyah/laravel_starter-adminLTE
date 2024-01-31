@@ -8,16 +8,36 @@ use Illuminate\Support\Facades\Hash;
 
 class UserDataController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Use a dynamic query to adjust based on the user's role
         $usersQuery = User::query();
 
-        // Paginate the results with 8 items per page without the manager
-        $users =  $usersQuery->where('role', '!=', 'manager')->paginate(8);
+        // Filter by role if a role is provided in the request
+        if ($request->has('role') && $request->role !== 'all roles') {
+            $usersQuery->where('role', $request->role);
+        }
 
-        return view('dashboard.users.index', ['users' => $users]);
+        // Search by name, role, or everything if a search query is provided
+        if ($request->has('search')) {
+            $searchQuery = $request->search;
+            $usersQuery->where(function ($query) use ($searchQuery) {
+                $query->where('nama_user', 'like', "%$searchQuery%")
+                    ->orWhere('username', 'like', "%$searchQuery%")
+                    ->orWhere('email', 'like', "%$searchQuery%")
+                    ->orWhere('role', 'like', "%$searchQuery%");
+            });
+        }
+
+        // Paginate the results with 8 items per page without the manager
+        $users = $usersQuery->where('role', '!=', 'manager')->paginate(8);
+
+        // Pass the roles to the view for filtering
+        $roles = ['all roles', 'admin', 'user'];
+
+        return view('dashboard.users.index', ['users' => $users, 'roles' => $roles]);
     }
+
 
 
     public function createUser()

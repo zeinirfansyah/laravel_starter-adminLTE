@@ -28,18 +28,27 @@
             <div class="container-fluid">
               <div class="card">
                 <div class="card-header">
-                  <a href="{{ route('users.create') }}" class="btn btn-primary">Add User</a>
-
+                  <a href="{{ route('users.create') }}" class="btn btn-default">Add User</a>
+        
                   <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px">
-                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
+                    <form method="GET" action="{{ route('users.index') }}" class="form-inline">
+                      <div class="input-group input-group-sm" style="width: 300px">
+                        <select name="role" class="form-control">
+                          @foreach ($roles as $role)
+                            <option value="{{ $role }}" {{ request('role') == $role ? 'selected' : '' }}>
+                              {{ ucfirst($role) }}
+                            </option>
+                          @endforeach
+                        </select>
+                        <input type="text" name="search" class="form-control ml-2" placeholder="Search" value="{{ request('search') }}" />
+        
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -81,7 +90,7 @@
                           </td>
                           <td>
                             <a href="{{ route('users.detail', ['id' => $user->id]) }}"
-                              class="btn btn-primary">Detail</a>
+                              class="btn btn-default">Detail</a>
 
                             <form action="{{ route('users.delete', ['id' => $user->id]) }}"
                               method="POST" class="d-inline">
