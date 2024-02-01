@@ -56,7 +56,7 @@ class RegisterController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
 
         ], [
             'required' => ':attribute harus diisi.',
