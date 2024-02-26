@@ -10,7 +10,7 @@
               @csrf
 
               <div class="row mb-3">
-                <label for="nama_user" class="col-md-4 col-form-label text-md-end">{{ __('Nama_user') }}</label>
+                <label for="nama_user" class="col-md-4 col-form-label text-md-end">{{ __('Nama Lengkap') }}</label>
 
                 <div class="col-md-6">
                   <input id="nama_user" type="text" class="form-control @error('nama_user') is-invalid @enderror"
@@ -25,7 +25,7 @@
               </div>
 
               <div class="row mb-3">
-                <label for="no_telepon" class="col-md-4 col-form-label text-md-end">{{ __('No_telepon') }}</label>
+                <label for="no_telepon" class="col-md-4 col-form-label text-md-end">{{ __('Nomor Telepon') }}</label>
 
                 <div class="col-md-6">
                   <input id="no_telepon" type="text" class="form-control @error('no_telepon') is-invalid @enderror"
@@ -87,12 +87,14 @@
 
               <div class="row mb-3">
                 <label for="avatar" class="col-md-4 col-form-label text-md-end">{{ __('Avatar')}}</label>
+               <div class="col-md-6">
                 <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
                 @error('avatar')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
               @enderror
+               </div>
               </div>
 
               <div class="row mb-3">
