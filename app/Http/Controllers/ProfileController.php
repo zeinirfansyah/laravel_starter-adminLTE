@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -12,12 +13,12 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('dashboard.profile.index', compact('user'));
+        return view('admin.profile.index', compact('user'));
     }
 
     public function updateProfile() {
         $user = auth()->user();
-        return view('dashboard.profile.update', compact('user'));
+        return view('admin.profile.update', compact('user'));
     }
 
     public function editProfile(Request $request)
@@ -28,7 +29,7 @@ class ProfileController extends Controller
         // Validation rules
         $rules = [
             'nama_user' => 'required|string|max:255',
-            'nomor_telpon' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -55,12 +56,12 @@ class ProfileController extends Controller
     
         // Handle file upload
         $currentAvatar = $user->avatar;
-        $filename = $this->handleAvatarUpload($request, $currentAvatar);
+        $filename = $this->handleFileUpload($request, $currentAvatar);
     
         // Update user data
         $userData = [
             'nama_user' => $request->nama_user,
-            'nomor_telpon' => $request->nomor_telpon,
+            'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
@@ -75,23 +76,31 @@ class ProfileController extends Controller
     
         User::where('id', $user->id)->update($userData);
     
+        // Delete the old file if it's different from the new one
+        if ($currentAvatar !== $filename) {
+            Storage::delete("public/files/avatars/{$currentAvatar}");
+        }
+
         return redirect()->route('profile.show', ['id' => $user->id])->with('success', 'User data updated successfully');
     }
     
-
-    private function handleAvatarUpload(Request $request, $currentAvatar)
+    private function handleFileUpload(Request $request, $currentFile)
     {
+
+        $nama_file = $request->nama_file;
+
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-
-            // Save the file in the 'public/avatars' directory
-            $avatar->storeAs('public/avatars', $filename);
-
+            $file = $request->file('avatar');
+            $filename = time() . '-' . $nama_file . '.' . $file->getClientOriginalExtension();
+    
+            // Save the file in the 'public/files/galery' directory
+            $file->storeAs('public/files/avatars', $filename);
+    
             return $filename; // Return the generated filename
         }
-
-        // If no new avatar file is provided, return the current avatar filename
-        return $currentAvatar;
+    
+        // If no new file file is provided, return the current file filename
+        return $currentFile;
     }
+
 }

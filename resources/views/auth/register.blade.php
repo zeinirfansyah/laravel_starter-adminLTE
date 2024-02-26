@@ -25,14 +25,14 @@
               </div>
 
               <div class="row mb-3">
-                <label for="nomor_telpon" class="col-md-4 col-form-label text-md-end">{{ __('Nomor_telpon') }}</label>
+                <label for="no_telepon" class="col-md-4 col-form-label text-md-end">{{ __('No_telepon') }}</label>
 
                 <div class="col-md-6">
-                  <input id="nomor_telpon" type="text" class="form-control @error('nomor_telpon') is-invalid @enderror"
-                    name="nomor_telpon" value="{{ old('nomor_telpon') }}" required autocomplete="nomor_telpon"
+                  <input id="no_telepon" type="text" class="form-control @error('no_telepon') is-invalid @enderror"
+                    name="no_telepon" value="{{ old('no_telepon') }}" required autocomplete="no_telepon"
                     autofocus />
 
-                  @error('nomor_telpon')
+                  @error('no_telepon')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

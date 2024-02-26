@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserDataController extends Controller
 {
@@ -37,13 +38,13 @@ class UserDataController extends Controller
             $usersQuery->orderBy($sortColumn, $sortOrder);
         }
 
-        // Paginate the results with 8 items per page without the manager
-        $users = $usersQuery->where('role', '!=', 'manager')->paginate(8);
+        // Paginate the results with 8 items per page without the superadmin
+        $users = $usersQuery->where('role', '!=', 'superadmin')->paginate(8);
 
         // Pass the roles to the view for filtering
         $roles = ['all roles', 'admin', 'user'];
 
-        return view('dashboard.users.index', [
+        return view('admin.users.index', [
             'users' => $users,
             'roles' => $roles,
             'sortColumn' => $request->get('sort_column'),
@@ -55,32 +56,34 @@ class UserDataController extends Controller
 
     public function createUser()
     {
-        return view('dashboard.users.create');
+        return view('admin.users.create');
     }
 
     public function updateUser($id)
     {
         $user = User::find($id);
         $roles = ['admin', 'user'];
-        return view('dashboard.users.update', compact('user', 'roles'));
+        return view('admin.users.update', compact('user', 'roles'));
     }
-
+    
     // handle upload avatar
-    // handle upload avatar
-    private function handleAvatarUpload(Request $request, $currentAvatar)
+    private function handleFileUpload(Request $request, $currentFile)
     {
+
+        $nama_file = $request->nama_file;
+
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-
-            // Save the file in the 'public/avatars' directory
-            $avatar->storeAs('public/avatars', $filename);
-
+            $file = $request->file('avatar');
+            $filename = time() . '-' . $nama_file . '.' . $file->getClientOriginalExtension();
+    
+            // Save the file in the 'public/files/galery' directory
+            $file->storeAs('public/files/avatars', $filename);
+    
             return $filename; // Return the generated filename
         }
-
-        // If no new avatar file is provided, return the current avatar filename
-        return $currentAvatar;
+    
+        // If no new file file is provided, return the current file filename
+        return $currentFile;
     }
 
 
@@ -88,7 +91,7 @@ class UserDataController extends Controller
     {
         $validate = $request->validate([
             'nama_user' => 'required|string|max:255',
-            'nomor_telpon' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -107,11 +110,11 @@ class UserDataController extends Controller
             'max' => ':attribute maksimal 2 MB.',
         ]);
 
-        $filename = $this->handleAvatarUpload($request, 'default_avatar.jpg');
+        $filename = $this->handleFileUpload($request, 'default_avatar.jpg');
 
         $user = [
             'nama_user' => $request->nama_user,
-            'nomor_telpon' => $request->nomor_telpon,
+            'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
@@ -130,7 +133,7 @@ class UserDataController extends Controller
     public function detailUser($id)
     {
         $user = User::find($id);
-        return view('dashboard.users.detail', compact('user'));
+        return view('admin.users.detail', compact('user'));
     }
 
     public function editUser(Request $request, $id)
@@ -139,7 +142,7 @@ class UserDataController extends Controller
 
         $validate = $request->validate([
             'nama_user' => 'required|string|max:255',
-            'nomor_telpon' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
@@ -159,23 +162,32 @@ class UserDataController extends Controller
 
         // Handle file upload
         $currentAvatar = $user->avatar;
-        $filename = $this->handleAvatarUpload($request, $currentAvatar);
+        $filename = $this->handleFileUpload($request, $currentAvatar);
 
 
         $user = [
             'nama_user' => $request->nama_user,
-            'nomor_telpon' => $request->nomor_telpon,
+            'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
             'avatar' => $filename,
-            'password' => Hash::make($request->password),
             'role' => $request->role,
             'created_at' => now(),
             'updated_at' => now(),
         ];
 
+         // Add password to the update array only if a new password is provided
+         if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
         $user = User::where('id', $id)->update($user);
+
+        // Delete the old file if it's different from the new one
+        if ($currentAvatar !== $filename) {
+            Storage::delete("public/files/avatars/{$currentAvatar}");
+        }
 
         return redirect()->route('users.detail', ['id' => $id])->with('success', 'User data updated successfully');
     }
@@ -185,6 +197,11 @@ class UserDataController extends Controller
         $user = User::find($id);
         $user->delete();
 
+        // Delete the avatar file
+        if ($user->avatar) {
+            Storage::delete("public/files/avatars/{$user->avatar}");
+        }
+        
         return redirect()->route('users.index')->with('success', 'User data deleted successfully');
     }
 }

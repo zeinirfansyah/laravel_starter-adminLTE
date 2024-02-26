@@ -51,10 +51,10 @@ class RegisterController extends Controller
    public function register(Request $request) {
         $request->validate([
             'nama_user' => 'required|string|max:255',
-            'nomor_telpon' => 'required|string|max:255',
+            'no_telepon' =>'required|string|max:255|unique:users,no_telepon',
             'alamat' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => 'required|string|min:8|confirmed',
 
@@ -70,20 +70,11 @@ class RegisterController extends Controller
             'max' => ':attribute maksimal 2 MB.',
         ]);
 
-       // Handle file upload
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->storeAs('public/avatars', $filename);
-        
-        } else {
-            // Default avatar or any other logic you prefer
-            $filename = 'default_avatar.jpg';
-        }
+        $filename = $this->handleFileUpload($request, 'default.png'); // Handle file upload and return the filename or the current file if no new file is provided.
 
         $user = [
             'nama_user' => $request->nama_user,
-            'nomor_telpon' => $request->nomor_telpon,
+            'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
@@ -96,5 +87,24 @@ class RegisterController extends Controller
         User::create($user);
 
         return redirect(route('login'))->with('success', 'Akun user berhasil dibuat. Silahkan login.');
+    }
+
+    private function handleFileUpload(Request $request, $currentFile)
+    {
+
+        $nama_file = $request->nama_file;
+
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $file = $request->file('avatar');
+            $filename = time() . '-' . $nama_file . '.' . $file->getClientOriginalExtension();
+    
+            // Save the file in the 'public/files/galery' directory
+            $file->storeAs('public/files/avatars', $filename);
+    
+            return $filename; // Return the generated filename
+        }
+    
+        // If no new file file is provided, return the current file filename
+        return $currentFile;
     }
 }

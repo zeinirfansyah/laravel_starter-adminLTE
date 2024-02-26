@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nama_user',
-        'nomor_telpon',
+        'no_telepon',
         'alamat',
         'username',
         'email',
@@ -57,7 +57,7 @@ class User extends Authenticatable
      * @return void
      */
     protected $attributes = [
-        'role' => 'user',
-        'avatar' => 'default_avatar.jpg',
+        'role' => 'customer',
+        'avatar' => 'default.png.jpg',
     ];
 }

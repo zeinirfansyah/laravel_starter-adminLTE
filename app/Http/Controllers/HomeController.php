@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,7 +18,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application admin.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -25,13 +26,14 @@ class HomeController extends Controller
     //  user
     public function index()
     {
-        return view('users.home');
+        $user = auth()->user();
+        return view('welcome', compact('user'));
     }
 
     // admin
     public function adminHome()
     {
-        return view('dashboard.adminHome');
+        return view('admin.adminHome');
     }
 
     // manager

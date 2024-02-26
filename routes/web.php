@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = auth()->user();
+    return view('welcome', compact('user'));
 });
 
 Auth::routes();
@@ -26,11 +27,11 @@ Auth::routes();
 Route::middleware(['auth'])->group(function(){
     
     //    all user routes
-    Route::get('/home', [HomeController::class, 'index'])->name('user.home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     
 
-    // Admin and manager routes
-    Route::middleware(['auth', 'user-access:admin,manager'])->group(function(){
+    // Admin and superadmin routes
+    Route::middleware(['auth', 'user-access:admin,superadmin'])->group(function(){
         Route::prefix('admin')->group(function () {
             Route::get('/', [HomeController::class, 'adminHome'])->name('admin.home');
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile.show');
@@ -39,9 +40,9 @@ Route::middleware(['auth'])->group(function(){
         });
     });
 
-    // Manager only
-    Route::middleware(['auth', 'user-access:manager'])->group(function(){
-        Route::prefix('/manager/users')->group(function () {
+    // Superadmin only
+    Route::middleware(['auth', 'user-access:superadmin'])->group(function(){
+        Route::prefix('/superadmin/users')->group(function () {
             Route::get('/', [UserDataController::class, 'index'])->name('users.index');
             Route::get('/create', [UserDataController::class, 'createUser'])->name('users.create');
             Route::post('/create', [UserDataController::class, 'storeUser'])->name('users.store');

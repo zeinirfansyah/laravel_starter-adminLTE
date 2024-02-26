@@ -89,14 +89,14 @@
                 />
             </div>
 
-            <div>@includeif('dashboard.layouts.navbar')</div>
-            <div>@includeif('dashboard.layouts.sidebar')</div>
+            <div>@includeif('admin.layouts.navbar')</div>
+            <div>@includeif('admin.layouts.sidebar')</div>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-dashboard">@yield('content')</div>
             <!-- /.content-wrapper -->
 
-            <div>@includeif('dashboard.layouts.footer')</div>
+            <div>@includeif('admin.layouts.footer')</div>
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">

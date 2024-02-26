@@ -1,15 +1,16 @@
-@extends('dashboard.layouts.master') @section('content')
+@extends('admin.layouts.master') @section('content')
   <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Profie</h1>
+            <h1 class="m-0">User Management</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Home</li>
-              <li class="breadcrumb-item active">Profile</li>
+              <li class="breadcrumb-item">User Management</li>
+              <li class="breadcrumb-item active">Detail User</li>
             </ol>
           </div>
         </div>
@@ -49,7 +50,7 @@
                     </tr>
                     <tr>
                       <th>Nomor Telepon</th>
-                      <td>{{ $user->nomor_telpon }}</td>
+                      <td>{{ $user->no_telepon }}</td>
                     </tr>
                     <tr>
                       <th>Alamat</th>
@@ -66,7 +67,7 @@
                           <img src="{{ asset('images/' . $user->avatar) }}" class="img-fluid rounded"
                             style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;">
                         @else
-                          <img src="{{ asset('storage/avatars/' . $user->avatar) }}" class="img-fluid rounded"
+                          <img src="{{ asset('storage/files/avatars/' . $user->avatar) }}" class="img-fluid rounded"
                             style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;" alt="{{ $user->avatar }}">
                         @endif
                       </div>
@@ -80,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <a href="{{ route('profile.update', ['id' => $user->id]) }}" class="btn btn-primary">Edit Data</a>
+            <a href="{{ route('users.update', ['id' => $user->id]) }}" class="btn btn-primary">Edit Data</a>
           </div>
         </div>
       </div>

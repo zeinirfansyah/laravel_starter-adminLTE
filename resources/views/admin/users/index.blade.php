@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master') @section('content')
+@extends('admin.layouts.master') @section('content')
   <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
@@ -21,7 +21,7 @@
     </div>
     <div class="content">
       <div class="container-fluid">
-        <div>@includeif('dashboard.layouts.stat_cards')</div>
+        <div>@includeif('admin.layouts.stat_cards')</div>
         <!-- filter and search -->
         <div class="row">
           <div class="col-md-12">
@@ -80,7 +80,7 @@
                         </th>
                         <th>
                           <a
-                            href="{{ route('users.index', ['sort_column' => 'nomor_telpon', 'sort_order' => $sortOrder == 'asc' && $sortColumn == 'nomor_telpon' ? 'desc' : 'asc']) }}">
+                            href="{{ route('users.index', ['sort_column' => 'no_telepon', 'sort_order' => $sortOrder == 'asc' && $sortColumn == 'no_telepon' ? 'desc' : 'asc']) }}">
                             Nomor Telepon
                           </a>
                         </th>
@@ -104,7 +104,7 @@
                               {{ $user->nama_user }}
                             </td>
                             <td>
-                              {{ $user->nomor_telpon }}
+                              {{ $user->no_telepon }}
                             </td>
                             <td>
                               {{ $user->email }}

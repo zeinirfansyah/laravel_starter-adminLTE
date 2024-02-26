@@ -15,8 +15,8 @@
             <img src="{{ asset('images/' . auth()->user()->avatar) }}"
               style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
           @else
-            <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}"
-              style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover"
+            <img src="{{ asset('storage/files/avatars/' . auth()->user()->avatar) }}"
+              style="height: 50px; width: 50px; object-fit: cover;  border: 5px solid #d7d7d7;"
               alt="{{ auth()->user()->avatar }}">
           @endif
         @else
@@ -25,7 +25,8 @@
         @endif
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ auth()->user()->nama_user }}</a>
+        <strong class="d-block">{{ auth()->user()->nama_user }}</strong>
+        <span class="d-block">{{ ucfirst(auth()->user()->role) }}</span>
       </div>
     </div>
 
@@ -106,13 +107,13 @@
           </a>
         </li>
 
-        <!-- manager role only -->
-        @if (auth()->user()->role == 'manager')
-          <li class="nav-header">Manager Only</li>
+        <!-- superadmin role only -->
+        @if (auth()->user()->role == 'superadmin')
+          <li class="nav-header">Superadmin Only</li>
           <li class="nav-item">
             <a href="{{ route('users.index') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
-              <p>User Manager</p>
+              <p>User Management</p>
             </a>
           </li>
         @endif
@@ -120,7 +121,7 @@
         </li>
         <li class="nav-header">Settings</li>
         <li class="nav-item">
-          <a href="{{route('profile.show')}}" class="nav-link">
+          <a href="{{ route('profile.show') }}" class="nav-link">
             <i class="nav-icon fas fa-users"></i>
             <p>Profile</p>
           </a>

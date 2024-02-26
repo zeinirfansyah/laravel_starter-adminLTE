@@ -1,15 +1,17 @@
-@extends('dashboard.layouts.master') @section('content')
+@extends('admin.layouts.master') @section('content')
   <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Update Profile</h1>
+            <h1 class="m-0">User Management</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Home</li>
-              <li class="breadcrumb-item active">Update Profile</li>
+              <li class="breadcrumb-item">User Management</li>
+              <li class="breadcrumb-item">Detail User</li>
+              <li class="breadcrumb-item active">Update User</li>
             </ol>
           </div>
         </div>
@@ -29,7 +31,7 @@
           </div>
         @endif
         <div class="card p-3">
-          <form action="{{ route('profile.edit', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('users.edit', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
 
             <div class="row">
@@ -38,8 +40,8 @@
                 <input type="text" name="nama_user" value="{{ old('nama_user', $user->nama_user), }}" placeholder="Masukkan nama lengkap"
                   required class="form-control" />
 
-                <label for="nomor_telpon" class="form-label">Nomor Telepon</label>
-                <input name="nomor_telpon" value="{{ old('nomor_telpon', $user->nomor_telpon) }}" placeholder="Masukkan nomor telepon"
+                <label for="no_telepon" class="form-label">Nomor Telepon</label>
+                <input name="no_telepon" value="{{ old('no_telepon', $user->no_telepon) }}" placeholder="Masukkan nomor telepon"
                   class="form-control" />
 
                 <!-- alamat text areaa -->
@@ -65,6 +67,15 @@
                 <input name="username" value="{{ old('username', $user->username) }}" placeholder="Masukkan username"
                   class="form-control" />
 
+                <!-- role dropdown -->
+                <label for="role" class="form-label">Role</label>
+                <select name="role" class="form-control">
+                    @foreach($roles as $role)
+                    <option value="{{ $role }}" {{ $user->role === $role ? 'selected' : '' }}>
+                        {{ ucfirst($role) }}
+                    </option>
+                @endforeach
+                </select>
                 <!-- password -->
                 <hr>
                 <div class="password mt-2">
@@ -86,9 +97,9 @@
                     }
                 </script>
                 </div>
-
               </div>
             </div>
+
             <button type="submit" class="btn btn-primary mt-2">
               Update User
             </button>

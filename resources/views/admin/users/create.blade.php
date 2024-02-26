@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master') @section('content')
+@extends('admin.layouts.master') @section('content')
   <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
@@ -10,8 +10,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Home</li>
               <li class="breadcrumb-item">User Management</li>
-              <li class="breadcrumb-item">Detail User</li>
-              <li class="breadcrumb-item active">Update User</li>
+              <li class="breadcrumb-item active">Create User</li>
             </ol>
           </div>
         </div>
@@ -31,56 +30,56 @@
           </div>
         @endif
         <div class="card p-3">
-          <form action="{{ route('users.edit', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data">
-            @csrf @method('PUT')
+          <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
             <div class="row">
               <div class="col">
                 <label for="nama_user" class="form-label">Nama User</label>
-                <input type="text" name="nama_user" value="{{ old('nama_user', $user->nama_user), }}" placeholder="Masukkan nama lengkap"
+                <input type="text" name="nama_user" value="{{ old('nama_user') }}" placeholder="Masukkan nama lengkap"
                   required class="form-control" />
 
-                <label for="nomor_telpon" class="form-label">Nomor Telepon</label>
-                <input name="nomor_telpon" value="{{ old('nomor_telpon', $user->nomor_telpon) }}" placeholder="Masukkan nomor telepon"
+                <label for="no_telepon" class="form-label">Nomor Telepon</label>
+                <input name="no_telepon" value="{{ old('no_telepon') }}" placeholder="Masukkan nomor telepon"
                   class="form-control" />
 
                 <!-- alamat text areaa -->
                 <label for="alamat" class="form-label">Alamat</label>
-                <textarea name="alamat" placeholder="Masukkan alamat" rows="4" class="form-control">{{ old('alamat', $user->alamat) }}</textarea>
+                <textarea name="alamat" placeholder="Masukkan alamat" rows="4" class="form-control">{{ old('alamat') }}</textarea>
 
-                <label for="avatar" class="form-label">Avatar</label>
+                <label for="avatar" class="col-md-4 col-form-label text-md-end">{{ __('Avatar')}}</label>
                 <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
                 @error('avatar')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
               </div>
               <div class="col">
                 <!-- email input -->
                 <label for="email" class="form-label">Email</label>
-                <input name="email" value="{{ old('email', $user->email) }}" placeholder="Masukkan email" class="form-control" />
+                <input name="email" value="{{ old('email') }}" placeholder="Masukkan email" class="form-control" />
 
                 <!-- username input -->
                 <label for="username" class="form-label">Username</label>
-                <input name="username" value="{{ old('username', $user->username) }}" placeholder="Masukkan username"
+                <input name="username" value="{{ old('username') }}" placeholder="Masukkan username"
                   class="form-control" />
+
+                <!-- password input -->
+                <label for="password" class="form-label">Password</label>
+                <input name="password" type="password" value="{{ old('password') }}" class="form-control" />
 
                 <!-- role dropdown -->
                 <label for="role" class="form-label">Role</label>
                 <select name="role" class="form-control">
-                    @foreach($roles as $role)
-                    <option value="{{ $role }}" {{ $user->role === $role ? 'selected' : '' }}>
-                        {{ ucfirst($role) }}
-                    </option>
-                @endforeach
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
                 </select>
               </div>
             </div>
 
             <button type="submit" class="btn btn-primary mt-2">
-              Update User
+              Create User
             </button>
           </form>
         </div>
