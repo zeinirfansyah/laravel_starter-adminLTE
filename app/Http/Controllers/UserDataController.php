@@ -179,7 +179,7 @@ class UserDataController extends Controller
 
          // Add password to the update array only if a new password is provided
          if ($request->filled('password')) {
-            $userData['password'] = Hash::make($request->password);
+            $user['password'] = Hash::make($request->password);
         }
 
         $user = User::where('id', $id)->update($user);
