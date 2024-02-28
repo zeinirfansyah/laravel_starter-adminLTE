@@ -62,7 +62,7 @@
               <div class="row  ">
                 <div class="col-md-12 mb-2">
                   <textarea id="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat"
-                    value="{{ old('alamat') }}" required autocomplete="alamat" autofocus placeholder="Alamat"></textarea>
+                    value="{{ old('alamat') }}" required autocomplete="alamat" autofocus placeholder="Alamat">{{ old('alamat') }}</textarea>
 
                   @error('alamat')
                     <span class="invalid-feedback" role="alert">
@@ -89,14 +89,14 @@
 
                 <script>
                   function updateLabelText(input) {
-                      var label = document.getElementById('avatar-label');
-                      var fileName = input.value.split('\\').pop(); // Get the file name
-                      label.innerText = `Foto Terpilih : ${fileName}`;
-              
-                      // Change background color
-                      label.style.backgroundColor = '#d1fff373'; // Replace with your desired color code
+                    var label = document.getElementById('avatar-label');
+                    var fileName = input.value.split('\\').pop(); // Get the file name
+                    label.innerText = `Foto Terpilih : ${fileName}`;
+
+                    // Change background color
+                    label.style.backgroundColor = '#d1fff373'; // Replace with your desired color code
                   }
-              </script>
+                </script>
 
               </div>
 
@@ -115,8 +115,14 @@
 
               <div class="row  ">
                 <div class="col-md-12 mb-2">
-                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required
+                  <input id="password-confirm" type="password" class="form-control  @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required
                     autocomplete="new-password" placeholder="Konfirmasi Password" />
+
+                  @error('password_confirmation')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 </div>
               </div>
 
@@ -129,7 +135,7 @@
                 <div class="col-md-12 mb-2">
                   <!-- have an account -->
                   <p>
-                    
+
                     <a href="{{ route('login') }}">
                       {{ __(' Sudah punya akun?') }}
                     </a>
