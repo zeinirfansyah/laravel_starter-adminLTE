@@ -103,6 +103,7 @@
   <script src="{{ asset('/AdminLTE/plugins/chart.js/Chart.min.js') }}"></script>
   <!-- AdminLTE dashboard2 demo -->
   <script src="{{ asset('/AdminLTE/dist/js/pages/dashboard2.js') }}"></script>
+  
 </body>
 
 </html>

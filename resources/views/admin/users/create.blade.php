@@ -78,9 +78,33 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#confirmationModal">
               Create User
             </button>
+
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="confirmationModalLabel">Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to create this user?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                Create User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </form>
         </div>
       </div>
