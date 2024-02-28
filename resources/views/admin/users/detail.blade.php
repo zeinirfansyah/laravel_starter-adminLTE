@@ -61,12 +61,12 @@
               <div class="col">
                 <div class="d-flex justify-content-center">
                   <div class="image">
-                    <div class="row">
+                    <div class="row mb-2">
                       <div class="col">
                        <!-- show avatar if exist -->
                        @if ($user->avatar)
-                       <img src="{{ asset('storage/files/avatars/' . $user->avatar) }}" class="img-fluid rounded"
-                       style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;" alt="{{ $user->avatar }}">
+                       <img src="{{ asset('storage/files/avatars/' . $user->avatar) }}" class="img-fluid"
+                       style="height: 200px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7; border-radius: 100%;" alt="{{ $user->avatar }}">
                        @else
                        <img
                           src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
