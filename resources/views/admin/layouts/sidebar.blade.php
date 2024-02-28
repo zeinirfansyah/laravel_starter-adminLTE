@@ -9,19 +9,14 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
+      <div class="image my-auto">
         @if (auth()->user()->avatar)
-          @if (auth()->user()->avatar === 'default_avatar.jpg')
-            <img src="{{ asset('images/' . auth()->user()->avatar) }}"
-              style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
-          @else
-            <img src="{{ asset('storage/files/avatars/' . auth()->user()->avatar) }}"
-              style="height: 50px; width: 50px; object-fit: cover;  border: 5px solid #d7d7d7;"
-              alt="{{ auth()->user()->avatar }}">
-          @endif
+          <img src="{{ asset('storage/files/avatars/' . auth()->user()->avatar) }}"
+            style="height: 60px; width: 60px; object-fit: cover;  border: 5px solid #d7d7d7; border-radius: 100%;"
+            alt="{{ auth()->user()->avatar }}">
         @else
-          <img src="{{ asset('images/default_avatar.jpg') }}"
-            style="height: 50px; width: 50px; border-radius: 10px; object-fit: cover">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+            alt="" srcset="" style="width: 60px; height: 60px; border-radius: 100%;">
         @endif
       </div>
       <div class="info">

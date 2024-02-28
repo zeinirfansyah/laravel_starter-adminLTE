@@ -39,42 +39,38 @@
             <div class="row">
               <div class="col-md-6">
                 <table class="table table-bordered">
-                    <tr>
-                      <th>Username</th>
-                      <td>{{ $user->username }}</td>
-                    </tr>
-                    <tr>
-                      <th>Email</th>
-                      <td>{{ $user->email }}</td>
-                    </tr>
-                    <tr>
-                      <th>Nomor Telepon</th>
-                      <td>{{ $user->no_telepon }}</td>
-                    </tr>
-                    <tr>
-                      <th>Alamat</th>
-                      <td class="text-break">{{ $user->alamat }}</td>
-                    </tr>
-                  </table>
+                  <tr>
+                    <th>Username</th>
+                    <td>{{ $user->username }}</td>
+                  </tr>
+                  <tr>
+                    <th>Email</th>
+                    <td>{{ $user->email }}</td>
+                  </tr>
+                  <tr>
+                    <th>Nomor Telepon</th>
+                    <td>{{ $user->no_telepon }}</td>
+                  </tr>
+                  <tr>
+                    <th>Alamat</th>
+                    <td class="text-break">{{ $user->alamat }}</td>
+                  </tr>
+                </table>
               </div>
               <div class="col">
                 <div class="d-flex justify-content-center">
                   <div class="image">
-                    <div class="row">
+                    <div class="row mb-2">
                       <div class="col">
                         <div class="image">
                           @if (auth()->user()->avatar)
-                            @if (auth()->user()->avatar === 'default_avatar.jpg')
-                              <img src="{{ asset('images/' . auth()->user()->avatar) }}"
-                                style="height: 300px; width: 250px; border-radius: 10px; object-fit: cover">
-                            @else
-                              <img src="{{ asset('storage/files/avatars/' . auth()->user()->avatar) }}"
-                                style="height: 300px; width: 250px; object-fit: cover;  border: 5px solid #d7d7d7;"
-                                alt="{{ auth()->user()->avatar }}">
-                            @endif
+                            <img src="{{ asset('storage/files/avatars/' . auth()->user()->avatar) }}"
+                              style="height: 200px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7; border-radius: 100%;"
+                              alt="{{ auth()->user()->avatar }}">
                           @else
-                            <img src="{{ asset('images/default_avatar.jpg') }}"
-                              style="height: 300px; width: 250px; border-radius: 10px; object-fit: cover">
+                          <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                          alt="" srcset="" style="width: 200px; height: 200px; border-radius: 100%;">
                           @endif
                         </div>
                       </div>

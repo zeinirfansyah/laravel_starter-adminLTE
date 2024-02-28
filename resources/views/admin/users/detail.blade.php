@@ -63,13 +63,15 @@
                   <div class="image">
                     <div class="row">
                       <div class="col">
-                        @if ($user->avatar === 'default_avatar.jpg')
-                          <img src="{{ asset('images/' . $user->avatar) }}" class="img-fluid rounded"
-                            style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;">
-                        @else
-                          <img src="{{ asset('storage/files/avatars/' . $user->avatar) }}" class="img-fluid rounded"
-                            style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;" alt="{{ $user->avatar }}">
-                        @endif
+                       <!-- show avatar if exist -->
+                       @if ($user->avatar)
+                       <img src="{{ asset('storage/files/avatars/' . $user->avatar) }}" class="img-fluid rounded"
+                       style="height: 300px; width: 200px; object-fit: cover;  border: 5px solid #d7d7d7;" alt="{{ $user->avatar }}">
+                       @else
+                       <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                          alt="" srcset="" style="width: 200px; height: 200px; border-radius: 100%;">
+                       @endif
                       </div>
                     </div>
                     <div class="row">
