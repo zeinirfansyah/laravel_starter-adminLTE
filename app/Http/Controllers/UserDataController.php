@@ -110,7 +110,7 @@ class UserDataController extends Controller
             'max' => ':attribute maksimal 2 MB.',
         ]);
 
-        $filename = $this->handleFileUpload($request, 'default_avatar.jpg');
+        $filename = $this->handleFileUpload($request, null);
 
         $user = [
             'nama_user' => $request->nama_user,

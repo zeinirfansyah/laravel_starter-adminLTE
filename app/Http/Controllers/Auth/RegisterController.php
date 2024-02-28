@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'max' => ':attribute maksimal 2 MB.',
         ]);
 
-        $filename = $this->handleFileUpload($request, 'default.png'); // Handle file upload and return the filename or the current file if no new file is provided.
+        $filename = $this->handleFileUpload($request, null); // Handle file upload and return the filename or the current file if no new file is provided.
 
         $user = [
             'nama_user' => $request->nama_user,
